@@ -1,0 +1,7 @@
+[package]
+name = "zkgame"
+type = "bin"
+authors = [""]
+compiler_version = "0.10.3"
+
+[dependencies]
