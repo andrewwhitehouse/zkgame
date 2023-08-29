@@ -9,6 +9,7 @@ fn main(guess: pub [Field; 8], solution:[Field; 8], solution_hash: pub Field) {
     // Checks if guess is valid
     assert(check_valid(guess));
 
+    // Check if guess is mathematically valid
     // For each number character (0 - 9) in sequence until next operator:
     //      Assign a field variable
     //      Multiply 10 and add current character
@@ -23,12 +24,27 @@ fn main(guess: pub [Field; 8], solution:[Field; 8], solution_hash: pub Field) {
 }
 
 // Checks guess and returns true is all constraints are met
-fn check_valid(mut guess: [Field; 8]) -> bool {
-    // Verify numbers in guess aren't larger than 14 (Don't think we can use <, >, =>, <=) Look into range constraints
+fn check_valid(guess: [Field; 8]) -> bool {
+    let mut equals = 0;
+    for i in 0..8 {
+        // Verify numbers in guess aren't larger than 14
+        assert(guess[i] as u64 < 15);
+        // Verify two operators aren't beside eachother
+        if guess[i] as u64 > 9 {
+            assert(guess[i + 1] as u64 < 10);
+        }
+        // If symbols is equals sign iterate equals
+        if guess[i] == 14 {
+            equals += 1;
+        }
+    }
     // Verify theres a single equal sign (14) and it's the final operator
+    assert(equals == 1);
     // Verify 14 is not last character in sequence.
+    assert(guess[7] != 14);
     // Verify first character isn't an operator (10, 11, 12, 13, 14)
-    // Verify two operators aren't beside eachother
+    assert(guess[0] as u64 < 10);
+    true
 }
 
 
@@ -57,8 +73,8 @@ fn check_guess(mut guess: [Field; 8], mut solution:[Field; 8]) -> [Field; 8] {
 
 #[test]
 fn testmain() {
-    let guess = [1, 11, 5, 10, 1, 2, 15, 8];
-    let solution = [1, 10, 1, 10, 9, 15, 1, 1];
+    let guess = [1, 11, 5, 10, 1, 2, 14, 8];
+    let solution = [1, 10, 1, 10, 9, 14, 1, 1];
     let solution_hash = std::hash::pedersen(solution)[0];
     main(guess, solution, solution_hash) 
 }
