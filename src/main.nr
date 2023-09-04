@@ -12,6 +12,10 @@
 //       4 = 04     9 = 09     = = 14       //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
+// Note to user: There is currently a bug in Noir that  
+// prevents this from compiling. Bug can be followed here:
+// https://github.com/noir-lang/noir/issues/2538
+
 use dep::std;
 
 fn main(guess: [Field; 8], solution:[Field; 8], solution_hash: pub Field) {
@@ -95,6 +99,7 @@ fn check_math(guess: [Field; 8]) -> bool {
 
     // Combine all numbers between operators before equals sign (max amount is 3)
     let mut numbers: [Field] = [0; 3];
+    
     // Combine numbers and append to numbers list every time an operator is hit.
     // Right side of equal sign is dropped because its the last operator.
     let mut number_idx = 0;
@@ -112,8 +117,7 @@ fn check_math(guess: [Field; 8]) -> bool {
     let mut final = 0;
 
     // Calculate the multiplication and division
-    // Multiply by inverse if division
-    for i in 0..3 {
+    for i in 0..2 {
         // Mult
         if ops[i] == 12 {
             numbers[i+1] = numbers[i] * numbers[i+1];
@@ -130,7 +134,7 @@ fn check_math(guess: [Field; 8]) -> bool {
     }
 
     // Calculate the additions and subtractions
-    for i in 0..3 {
+    for i in 0..2 {
         // Add
         if ops[i] == 10 {
             numbers[i+1] = numbers[i] + numbers[i+1];
@@ -146,14 +150,10 @@ fn check_math(guess: [Field; 8]) -> bool {
         
     }
 
-    //std::println(final);
-    //std::println(total);
-
     // Check equal to total
     assert(final == total);
 
     true
-
 }
 
 // Compare guess to private answer and returns score
