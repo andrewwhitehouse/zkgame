@@ -16,8 +16,6 @@ Rules
 
  * Standard order of operations applies, so calculate * and / before + and - eg. 3+2*5=13 not 25!
 
-__Note: There is currently a [bug](https://github.com/noir-lang/noir/issues/2538) in Noir that prevents this project from working compiling. Once there is a fix this project will be updated.__
-
 ## Setup
 
 * Install the lastest version of Noir
