@@ -72,7 +72,7 @@ fn check_valid(guess: [Field; 8]) -> bool {
 // Check if guess is mathematically valid
 fn check_math(guess: [Field; 8]) -> bool {
     // Get list of operators
-    let mut ops: [Field] = [0; 3];
+    let mut ops: [Field; 3] = [0; 3];
     let mut j = 0;
     let mut eq_idx = 0;
     for i in 1..7 {
@@ -98,7 +98,7 @@ fn check_math(guess: [Field; 8]) -> bool {
     }
 
     // Combine all numbers between operators before equals sign (max amount is 3)
-    let mut numbers: [Field] = [0; 3];
+    let mut numbers: [Field; 3] = [0; 3];
     
     // Combine numbers and append to numbers list every time an operator is hit.
     // Right side of equal sign is dropped because its the last operator.
